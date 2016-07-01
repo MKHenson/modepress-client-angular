@@ -25,7 +25,7 @@ module ModepressClientPlugin {
          * @param {string} slug The slug of the post
          * @returns {ng.IPromise<Modepress.IPost>}
          */
-        private getPost( url : string ): ng.IPromise<Modepress.IPost>
+        private getSingle( url : string ): ng.IPromise<Modepress.IPost>
         {
             var that = this;
             return new this._q<Modepress.IPost>(function( resolve, reject ) {
@@ -46,9 +46,9 @@ module ModepressClientPlugin {
          * @param {string} slug The slug of the post
          * @returns {ng.IPromise<Modepress.IPost>}
          */
-        postBySlug(slug : string) : ng.IPromise<Modepress.IPost>
+        bySlug(slug : string) : ng.IPromise<Modepress.IPost>
         {
-            return this.getPost(`${this._url}/api/posts/slug/${slug}`);
+            return this.getSingle(`${this._url}/api/posts/slug/${slug}`);
         }
 
         /**
@@ -56,9 +56,9 @@ module ModepressClientPlugin {
          * @param {string} slug The slug of the post
          * @returns {ng.IPromise<Modepress.IPost>}
          */
-        postById(id : string) : ng.IPromise<Modepress.IPost>
+        byId(id : string) : ng.IPromise<Modepress.IPost>
         {
-            return this.getPost(`${this._url}/api/posts/${id}`);
+            return this.getSingle(`${this._url}/api/posts/${id}`);
         }
     }
 }

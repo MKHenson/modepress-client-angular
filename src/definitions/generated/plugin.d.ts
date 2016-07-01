@@ -14,19 +14,19 @@ declare module ModepressClientPlugin {
          * @param {string} slug The slug of the post
          * @returns {ng.IPromise<Modepress.IPost>}
          */
-        private getPost(url);
+        private getSingle(url);
         /**
          * Gets a post by its unique slug
          * @param {string} slug The slug of the post
          * @returns {ng.IPromise<Modepress.IPost>}
          */
-        postBySlug(slug: string): ng.IPromise<Modepress.IPost>;
+        bySlug(slug: string): ng.IPromise<Modepress.IPost>;
         /**
          * Gets a post by its id
          * @param {string} slug The slug of the post
          * @returns {ng.IPromise<Modepress.IPost>}
          */
-        postById(id: string): ng.IPromise<Modepress.IPost>;
+        byId(id: string): ng.IPromise<Modepress.IPost>;
     }
 }
 declare module ModepressClientPlugin {
