@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "removeComments": false,
+    "noEmitOnError": true,
+    "declaration": true,
+    "sourceMap": false,
+    "preserveConstEnums": true,
+    "target": "es5",
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "outFile": "plugin.js",
+    "noImplicitAny" : false
+  },
+  "files": [
+        "src/_references.d.ts",
+        "src/services/post-service.ts",
+        "src/plugin.ts"
+  ]
+}
