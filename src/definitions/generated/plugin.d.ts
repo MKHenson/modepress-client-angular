@@ -1,13 +1,19 @@
 declare module ModepressClientPlugin {
     /**
-     * A service for communicating with a Modepress backend and its endpoints
+     * A service for interacting with post data and the relevant modepress endpoints
      */
-    class ModepressService {
+    class PostService {
         private _http;
         private _location;
         private _url;
+        private _q;
         static $inject: string[];
-        constructor($http: ng.IHttpService, $location: ng.ILocationService, apiUrl: string);
+        constructor($http: ng.IHttpService, $location: ng.ILocationService, apiUrl: string, $q: ng.IQService);
+        /**
+         * Gets a post by its unique slug
+         * @param {string} slug The slug of the post
+         */
+        postBySlug(slug: string): ng.IPromise<Modepress.IPost>;
     }
 }
 declare module ModepressClientPlugin {
