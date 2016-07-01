@@ -13,11 +13,12 @@ var ModepressClientPlugin;
         /**
          * Gets a post by its unique slug
          * @param {string} slug The slug of the post
+         * @returns {ng.IPromise<Modepress.IPost>}
          */
-        PostService.prototype.postBySlug = function (slug) {
+        PostService.prototype.getPost = function (url) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                that._http.get(that._url + "/posts/" + slug).then(function (response) {
+                that._http.get(url).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
                     resolve(response.data.data);
@@ -25,6 +26,22 @@ var ModepressClientPlugin;
                     reject(err);
                 });
             });
+        };
+        /**
+         * Gets a post by its unique slug
+         * @param {string} slug The slug of the post
+         * @returns {ng.IPromise<Modepress.IPost>}
+         */
+        PostService.prototype.postBySlug = function (slug) {
+            return this.getPost(this._url + "/api/posts/slug/" + slug);
+        };
+        /**
+         * Gets a post by its id
+         * @param {string} slug The slug of the post
+         * @returns {ng.IPromise<Modepress.IPost>}
+         */
+        PostService.prototype.postById = function (id) {
+            return this.getPost(this._url + "/api/posts/" + id);
         };
         // The dependency injector
         PostService.$inject = ["$http", "$location", "$stateParams", "apiUrl", "$q"];
