@@ -34,7 +34,7 @@ var ModepressClientPlugin;
 })(ModepressClientPlugin || (ModepressClientPlugin = {}));
 var ModepressClientPlugin;
 (function (ModepressClientPlugin) {
-    angular.module("blacktip", ['ngSanitize'])
+    angular.module("modepress-client", ['ngSanitize'])
         .value('apiUrl', '')
         .service("modepress", ModepressClientPlugin.PostService);
 })(ModepressClientPlugin || (ModepressClientPlugin = {}));
