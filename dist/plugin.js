@@ -44,7 +44,7 @@ var ModepressClientPlugin;
             return this.getSingle(this._url + "/api/posts/" + id);
         };
         // The dependency injector
-        PostService.$inject = ["$http", "$location", "$stateParams", "apiUrl", "$q"];
+        PostService.$inject = ["$http", "$location", "apiUrl", "$q"];
         return PostService;
     }());
     ModepressClientPlugin.PostService = PostService;

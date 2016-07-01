@@ -11,7 +11,7 @@ module ModepressClientPlugin {
         private _q: ng.IQService;
 
         // The dependency injector
-        public static $inject = ["$http", "$location", "$stateParams", "apiUrl", "$q" ];
+        public static $inject = ["$http", "$location", "apiUrl", "$q" ];
         constructor($http: ng.IHttpService, $location: ng.ILocationService, apiUrl : string, $q: ng.IQService )
         {
             this._http = $http;
