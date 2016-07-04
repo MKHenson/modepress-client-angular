@@ -56,16 +56,14 @@ module ModepressClientPlugin {
     export class PostService {
 
         private _http: ng.IHttpService;
-        private _location: ng.ILocationService;
         private _url: string;
         private _q: ng.IQService;
 
         // The dependency injector
-        public static $inject = ["$http", "$location", "apiUrl", "$q" ];
-        constructor($http: ng.IHttpService, $location: ng.ILocationService, apiUrl : string, $q: ng.IQService )
+        public static $inject = ["$http", "apiUrl", "$q" ];
+        constructor($http: ng.IHttpService, apiUrl : string, $q: ng.IQService )
         {
             this._http = $http;
-            this._location = $location;
             this._q = $q;
             this._url = apiUrl;
         }
@@ -119,7 +117,7 @@ module ModepressClientPlugin {
         delete(id: string): ng.IPromise<string>
         {
             var that = this;
-            return new this._q<Modepress.IPost>(function( resolve, reject ) {
+            return new this._q<string>(function( resolve, reject ) {
                 var url : string = `${this._url}/api/posts/id`;
                 that._http.delete<Modepress.IResponse>(url).then(function(response){
                     if ( response.data.error )
@@ -156,13 +154,13 @@ module ModepressClientPlugin {
 
         /**
          * Creates a new post
-         * @param {Modepress.IPost} postData The post data to edit
+         * @param {Modepress.IPost} postData The post data to create
          * @returns {ng.IPromise<string>}
          */
         create(postData: Modepress.IPost): ng.IPromise<string>
         {
             var that = this;
-            return new this._q<Modepress.IPost>(function( resolve, reject ) {
+            return new this._q<string>(function( resolve, reject ) {
                 var url : string = `${this._url}/api/posts`;
                 that._http.post<Modepress.IResponse>(url, postData).then(function(response){
                     if ( response.data.error )
@@ -177,7 +175,7 @@ module ModepressClientPlugin {
 
         /**
          * Gets all posts that match each of the parameter conditions
-         * @param {IPostOptions} options The filter options
+         * @param {Modepress.IPostOptions} options The filter options
          */
         all( options? : IPostOptions ) : ng.IPromise<Modepress.IGetPosts>
         {
