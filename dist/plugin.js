@@ -254,8 +254,177 @@ var ModepressClientPlugin;
 })(ModepressClientPlugin || (ModepressClientPlugin = {}));
 var ModepressClientPlugin;
 (function (ModepressClientPlugin) {
+    /**
+     * A service for interacting with comment data and the relevant modepress endpoints
+     */
+    var CommentService = (function () {
+        function CommentService($http, apiUrl, $q) {
+            this._http = $http;
+            this._q = $q;
+            this._url = apiUrl;
+        }
+        /**
+         * Gets a comment based on the url provided
+         * @param {string} slug The slug of the comment
+         * @returns {ng.IPromise<Modepress.IComment>}
+         */
+        CommentService.prototype.getSingle = function (url) {
+            var that = this;
+            return new this._q(function (resolve, reject) {
+                that._http.get(url).then(function (response) {
+                    if (response.data.error)
+                        reject(new Error(response.data.message));
+                    resolve(response.data.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+        /**
+         * Gets a comment by its id
+         * @param {string} slug The slug of the comment
+         * @returns {ng.IPromise<Modepress.IComment>}
+         */
+        CommentService.prototype.byId = function (id) {
+            return this.getSingle(this._url + "/api/comments/" + id);
+        };
+        /**
+         * Removes a comment by its ID
+         * @param {string} user The parent user of the comment
+         * @param {string} id The id of the comment
+         * @returns {ng.IPromise<string>}
+         */
+        CommentService.prototype.delete = function (user, id) {
+            var that = this;
+            return new this._q(function (resolve, reject) {
+                var url = this._url + "/api/users/" + user + "/comments/" + id;
+                that._http.delete(url).then(function (response) {
+                    if (response.data.error)
+                        reject(new Error(response.data.message));
+                    resolve(response.data.message);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+        /**
+         * Edits a comment by its ID
+         * @param {string} user The parent user of the comment
+         * @param {string} id The id of the comment
+         * @param {Modepress.IComment} commentData The comment data to edit
+         * @returns {ng.IPromise<string>}
+         */
+        CommentService.prototype.edit = function (user, id, commentData) {
+            var that = this;
+            return new this._q(function (resolve, reject) {
+                var url = this._url + "/api/users/" + user + "/comments/" + id;
+                that._http.put(url, commentData).then(function (response) {
+                    if (response.data.error)
+                        reject(new Error(response.data.message));
+                    resolve(response.data.message);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+        /**
+         * Creates a new comment
+         * @param {string} postId The post we are commenting on
+         * @param {Modepress.IComment} commentData The comment data to create
+         * @param {string} [Optional] parentId The parent comment we are commenting on
+         * @returns {ng.IPromise<string>}
+         */
+        CommentService.prototype.create = function (postId, commentData, parentId) {
+            var that = this;
+            return new this._q(function (resolve, reject) {
+                var url = this._url + "/api/posts/" + postId + "/comments/" + parentId;
+                that._http.post(url, commentData).then(function (response) {
+                    if (response.data.error)
+                        reject(new Error(response.data.message));
+                    resolve(response.data.message);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+        /**
+         * Gets all comments that are children of a given parent
+         * @param {string} parentId The parent comment ID
+         * @param {Modepress.ICommentOptions} options The filter options
+         * @returns {ng.IPromise<Modepress.IGetComments>}
+         */
+        CommentService.prototype.allByParent = function (parentId, options) {
+            return this.all(this._url + "/api/nested-comments/" + parentId, options);
+        };
+        /**
+        * Gets all comments of a user
+        * @param {string} user The username  of the user
+        * @param {Modepress.ICommentOptions} options The filter options
+        * @returns {ng.IPromise<Modepress.IGetComments>}
+        */
+        CommentService.prototype.allByUser = function (user, options) {
+            return this.all(this._url + "/api/users/" + user + "/comments", options);
+        };
+        /**
+         * Gets all comments that match each of the parameter conditions
+         * @param {Modepress.ICommentOptions} options The filter options
+         * @returns {ng.IPromise<Modepress.IGetComments>}
+         */
+        CommentService.prototype.all = function (url, options) {
+            if (url === void 0) { url = this._url + "/api/comments?"; }
+            var that = this;
+            return new this._q(function (resolve, reject) {
+                options = options || {};
+                options.user = options.user || undefined;
+                options.depth = options.depth || undefined;
+                options.expanded = options.expanded || undefined;
+                options.parentId = options.parentId || undefined;
+                options.limit = options.limit || undefined;
+                options.index = options.index || undefined;
+                options.keyword = options.keyword || undefined;
+                options.sortOrder = options.sortOrder || undefined;
+                options.visibility = options.visibility || undefined;
+                options.sortByUpdate = options.sortByUpdate || undefined;
+                if (options.user !== undefined)
+                    url += "user=" + options.user + "&";
+                if (options.visibility !== undefined)
+                    url += "visibility=" + ModepressClientPlugin.Visibility[options.visibility] + "&";
+                if (options.keyword !== undefined)
+                    url += "keyword=" + options.keyword + "&";
+                if (options.sortByUpdate !== undefined)
+                    url += "sort=" + options.sortByUpdate + "&";
+                if (options.sortOrder !== undefined)
+                    url += "sortOrder=" + ModepressClientPlugin.SortOrder[options.sortOrder] + "&";
+                if (options.depth !== undefined)
+                    url += "depth=" + options.depth + "&";
+                if (options.expanded !== undefined)
+                    url += "expanded=" + options.expanded + "&";
+                if (options.parentId !== undefined)
+                    url += "parentId=" + options.parentId + "&";
+                if (options.index !== undefined)
+                    url += "index=" + options.index + "&";
+                if (options.limit !== undefined)
+                    url += "limit=" + options.limit + "&";
+                that._http.get(url).then(function (response) {
+                    if (response.data.error)
+                        reject(new Error(response.data.message));
+                    resolve(response.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+        // The dependency injector
+        CommentService.$inject = ["$http", "apiUrl", "$q"];
+        return CommentService;
+    }());
+    ModepressClientPlugin.CommentService = CommentService;
+})(ModepressClientPlugin || (ModepressClientPlugin = {}));
+var ModepressClientPlugin;
+(function (ModepressClientPlugin) {
     angular.module("modepress-client", ['ngSanitize'])
         .value('apiUrl', '')
         .service("posts", ModepressClientPlugin.PostService)
-        .service("categories", ModepressClientPlugin.CategoryService);
+        .service("categories", ModepressClientPlugin.CategoryService)
+        .service("comments", ModepressClientPlugin.CommentService);
 })(ModepressClientPlugin || (ModepressClientPlugin = {}));

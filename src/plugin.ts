@@ -3,4 +3,5 @@ module ModepressClientPlugin {
     .value('apiUrl', '')
 	  .service("posts", PostService )
     .service("categories", CategoryService )
+    .service("comments", CommentService )
 }

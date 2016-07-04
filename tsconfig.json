@@ -16,6 +16,7 @@
         "src/_references.d.ts",
         "src/services/post-service.ts",
         "src/services/category-service.ts",
+        "src/services/comment-service.ts",
         "src/plugin.ts"
   ]
 }
