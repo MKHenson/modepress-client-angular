@@ -51,11 +51,10 @@ declare module ModepressClientPlugin {
      */
     class PostService {
         private _http;
-        private _location;
         private _url;
         private _q;
         static $inject: string[];
-        constructor($http: ng.IHttpService, $location: ng.ILocationService, apiUrl: string, $q: ng.IQService);
+        constructor($http: ng.IHttpService, apiUrl: string, $q: ng.IQService);
         /**
          * Gets a post by its unique slug
          * @param {string} slug The slug of the post
@@ -89,15 +88,46 @@ declare module ModepressClientPlugin {
         edit(id: string, postData: Modepress.IPost): ng.IPromise<string>;
         /**
          * Creates a new post
-         * @param {Modepress.IPost} postData The post data to edit
+         * @param {Modepress.IPost} postData The post data to create
          * @returns {ng.IPromise<string>}
          */
         create(postData: Modepress.IPost): ng.IPromise<string>;
         /**
          * Gets all posts that match each of the parameter conditions
-         * @param {IPostOptions} options The filter options
+         * @param {Modepress.IPostOptions} options The filter options
          */
         all(options?: IPostOptions): ng.IPromise<Modepress.IGetPosts>;
+    }
+}
+declare module ModepressClientPlugin {
+    /**
+     * A service for interacting with categories
+     */
+    class CategoryService {
+        private _http;
+        private _url;
+        private _q;
+        static $inject: string[];
+        constructor($http: ng.IHttpService, apiUrl: string, $q: ng.IQService);
+        /**
+         * Removes a category by its ID
+         * @param {string} id The id of the category
+         * @returns {ng.IPromise<string>}
+         */
+        delete(id: string): ng.IPromise<string>;
+        /**
+         * Creates a new category
+         * @param {Modepress.ICategory} category The category data to create
+         * @returns {ng.IPromise<string>}
+         */
+        create(category: Modepress.ICategory): ng.IPromise<string>;
+        /**
+         * Gets all categories
+         * @param {number} index The start index to fetch categories from
+         * @param {number} limit The number of categories to return for this call
+         * @returns {Modepress.IGetCategories}
+         */
+        all(index?: number, limit?: number): ng.IPromise<Modepress.IGetCategories>;
     }
 }
 declare module ModepressClientPlugin {

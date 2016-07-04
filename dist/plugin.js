@@ -26,9 +26,8 @@ var ModepressClientPlugin;
      * A service for interacting with post data and the relevant modepress endpoints
      */
     var PostService = (function () {
-        function PostService($http, $location, apiUrl, $q) {
+        function PostService($http, apiUrl, $q) {
             this._http = $http;
-            this._location = $location;
             this._q = $q;
             this._url = apiUrl;
         }
@@ -104,7 +103,7 @@ var ModepressClientPlugin;
         };
         /**
          * Creates a new post
-         * @param {Modepress.IPost} postData The post data to edit
+         * @param {Modepress.IPost} postData The post data to create
          * @returns {ng.IPromise<string>}
          */
         PostService.prototype.create = function (postData) {
@@ -122,7 +121,7 @@ var ModepressClientPlugin;
         };
         /**
          * Gets all posts that match each of the parameter conditions
-         * @param {IPostOptions} options The filter options
+         * @param {Modepress.IPostOptions} options The filter options
          */
         PostService.prototype.all = function (options) {
             var that = this;
@@ -172,14 +171,91 @@ var ModepressClientPlugin;
             });
         };
         // The dependency injector
-        PostService.$inject = ["$http", "$location", "apiUrl", "$q"];
+        PostService.$inject = ["$http", "apiUrl", "$q"];
         return PostService;
     }());
     ModepressClientPlugin.PostService = PostService;
 })(ModepressClientPlugin || (ModepressClientPlugin = {}));
 var ModepressClientPlugin;
 (function (ModepressClientPlugin) {
+    /**
+     * A service for interacting with categories
+     */
+    var CategoryService = (function () {
+        function CategoryService($http, apiUrl, $q) {
+            this._http = $http;
+            this._q = $q;
+            this._url = apiUrl;
+        }
+        /**
+         * Removes a category by its ID
+         * @param {string} id The id of the category
+         * @returns {ng.IPromise<string>}
+         */
+        CategoryService.prototype.delete = function (id) {
+            var that = this;
+            return new this._q(function (resolve, reject) {
+                var url = this._url + "/api/categories/id";
+                that._http.delete(url).then(function (response) {
+                    if (response.data.error)
+                        reject(new Error(response.data.message));
+                    resolve(response.data.message);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+        /**
+         * Creates a new category
+         * @param {Modepress.ICategory} category The category data to create
+         * @returns {ng.IPromise<string>}
+         */
+        CategoryService.prototype.create = function (category) {
+            var that = this;
+            return new this._q(function (resolve, reject) {
+                var url = this._url + "/api/categories";
+                that._http.post(url, category).then(function (response) {
+                    if (response.data.error)
+                        reject(new Error(response.data.message));
+                    resolve(response.data.message);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+        /**
+         * Gets all categories
+         * @param {number} index The start index to fetch categories from
+         * @param {number} limit The number of categories to return for this call
+         * @returns {Modepress.IGetCategories}
+         */
+        CategoryService.prototype.all = function (index, limit) {
+            var that = this;
+            return new this._q(function (resolve, reject) {
+                var url = this._url + "/api/categories?";
+                if (index !== undefined)
+                    url += "index=" + index + "&";
+                if (limit !== undefined)
+                    url += "limit=" + limit + "&";
+                that._http.get(url).then(function (response) {
+                    if (!response.data.error)
+                        reject(new Error(response.data.message));
+                    resolve(response.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+        // The dependency injector
+        CategoryService.$inject = ["$http", "apiUrl", "$q"];
+        return CategoryService;
+    }());
+    ModepressClientPlugin.CategoryService = CategoryService;
+})(ModepressClientPlugin || (ModepressClientPlugin = {}));
+var ModepressClientPlugin;
+(function (ModepressClientPlugin) {
     angular.module("modepress-client", ['ngSanitize'])
         .value('apiUrl', '')
-        .service("posts", ModepressClientPlugin.PostService);
+        .service("posts", ModepressClientPlugin.PostService)
+        .service("categories", ModepressClientPlugin.CategoryService);
 })(ModepressClientPlugin || (ModepressClientPlugin = {}));
