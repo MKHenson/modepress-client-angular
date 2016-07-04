@@ -162,7 +162,7 @@ var ModepressClientPlugin;
                 if (options.limit !== undefined)
                     url += "limit=" + options.limit + "&";
                 that._http.get(url).then(function (response) {
-                    if (!response.data.error)
+                    if (response.data.error)
                         reject(new Error(response.data.message));
                     resolve(response.data);
                 }).catch(function (err) {
@@ -238,7 +238,7 @@ var ModepressClientPlugin;
                 if (limit !== undefined)
                     url += "limit=" + limit + "&";
                 that._http.get(url).then(function (response) {
-                    if (!response.data.error)
+                    if (response.data.error)
                         reject(new Error(response.data.message));
                     resolve(response.data);
                 }).catch(function (err) {

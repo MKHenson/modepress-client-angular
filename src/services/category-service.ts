@@ -79,7 +79,7 @@ module ModepressClientPlugin {
                     url += `limit=${limit}&`;
 
                 that._http.get<Modepress.IGetCategories>(url).then(function(response){
-                    if ( !response.data.error )
+                    if ( response.data.error )
                         reject(new Error(response.data.message));
 
                     resolve(response.data);

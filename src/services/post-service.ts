@@ -220,7 +220,7 @@ module ModepressClientPlugin {
                     url += `limit=${options.limit}&`;
 
                 that._http.get<Modepress.IGetPosts>(url).then(function(response){
-                    if ( !response.data.error )
+                    if ( response.data.error )
                         reject(new Error(response.data.message));
 
                     resolve(response.data);
