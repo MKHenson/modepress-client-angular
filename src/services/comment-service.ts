@@ -89,7 +89,7 @@ module ModepressClientPlugin {
         {
             var that = this;
             return new this._q<string>(function( resolve, reject ) {
-                var url : string = `${this._url}/api/users/${user}/comments/${id}`;
+                var url : string = `${that._url}/api/users/${user}/comments/${id}`;
                 that._http.delete<Modepress.IResponse>(url).then(function(response) {
                     if ( response.data.error )
                         reject(new Error(response.data.message));
@@ -112,7 +112,7 @@ module ModepressClientPlugin {
         {
             var that = this;
             return new this._q<Modepress.IComment>(function( resolve, reject ) {
-                var url : string = `${this._url}/api/users/${user}/comments/${id}`;
+                var url : string = `${that._url}/api/users/${user}/comments/${id}`;
                 that._http.put<Modepress.IResponse>(url, commentData).then(function(response){
                     if ( response.data.error )
                         reject(new Error(response.data.message));
@@ -135,7 +135,7 @@ module ModepressClientPlugin {
         {
             var that = this;
             return new this._q<string>(function( resolve, reject ) {
-                var url : string = `${this._url}/api/posts/${postId}/comments/${parentId}`;
+                var url : string = `${that._url}/api/posts/${postId}/comments/${parentId}`;
                 that._http.post<Modepress.IResponse>(url, commentData).then(function(response){
                     if ( response.data.error )
                         reject(new Error(response.data.message));

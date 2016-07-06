@@ -72,7 +72,7 @@ var ModepressClientPlugin;
         PostService.prototype.delete = function (id) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = this._url + "/api/posts/id";
+                var url = that._url + "/api/posts/id";
                 that._http.delete(url).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
@@ -91,7 +91,7 @@ var ModepressClientPlugin;
         PostService.prototype.edit = function (id, postData) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = this._url + "/api/posts/id";
+                var url = that._url + "/api/posts/id";
                 that._http.put(url, postData).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
@@ -109,7 +109,7 @@ var ModepressClientPlugin;
         PostService.prototype.create = function (postData) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = this._url + "/api/posts";
+                var url = that._url + "/api/posts";
                 that._http.post(url, postData).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
@@ -138,7 +138,7 @@ var ModepressClientPlugin;
                 options.minimal = options.minimal || undefined;
                 options.visibility = options.visibility || undefined;
                 options.sortByUpdate = options.sortByUpdate || undefined;
-                var url = this._url + "/api/posts?";
+                var url = that._url + "/api/posts?";
                 if (options.author !== undefined)
                     url += "author=" + options.author + "&";
                 if (options.visibility !== undefined)
@@ -195,7 +195,7 @@ var ModepressClientPlugin;
         CategoryService.prototype.delete = function (id) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = this._url + "/api/categories/id";
+                var url = that._url + "/api/categories/id";
                 that._http.delete(url).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
@@ -213,7 +213,7 @@ var ModepressClientPlugin;
         CategoryService.prototype.create = function (category) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = this._url + "/api/categories";
+                var url = that._url + "/api/categories";
                 that._http.post(url, category).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
@@ -232,7 +232,7 @@ var ModepressClientPlugin;
         CategoryService.prototype.all = function (index, limit) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = this._url + "/api/categories?";
+                var url = that._url + "/api/categories?";
                 if (index !== undefined)
                     url += "index=" + index + "&";
                 if (limit !== undefined)
@@ -297,7 +297,7 @@ var ModepressClientPlugin;
         CommentService.prototype.delete = function (user, id) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = this._url + "/api/users/" + user + "/comments/" + id;
+                var url = that._url + "/api/users/" + user + "/comments/" + id;
                 that._http.delete(url).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
@@ -317,7 +317,7 @@ var ModepressClientPlugin;
         CommentService.prototype.edit = function (user, id, commentData) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = this._url + "/api/users/" + user + "/comments/" + id;
+                var url = that._url + "/api/users/" + user + "/comments/" + id;
                 that._http.put(url, commentData).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
@@ -337,7 +337,7 @@ var ModepressClientPlugin;
         CommentService.prototype.create = function (postId, commentData, parentId) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = this._url + "/api/posts/" + postId + "/comments/" + parentId;
+                var url = that._url + "/api/posts/" + postId + "/comments/" + parentId;
                 that._http.post(url, commentData).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
