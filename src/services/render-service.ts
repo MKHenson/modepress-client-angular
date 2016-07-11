@@ -77,7 +77,7 @@ module ModepressClientPlugin {
         /**
          * Removes all renders
          */
-        clear(id: string): ng.IPromise<void>
+        clear(): ng.IPromise<void>
         {
             var that = this;
             return new this._q<void>(function( resolve, reject ) {

@@ -472,7 +472,7 @@ var ModepressClientPlugin;
         /**
          * Removes all renders
          */
-        RenderService.prototype.clear = function (id) {
+        RenderService.prototype.clear = function () {
             var that = this;
             return new this._q(function (resolve, reject) {
                 var url = that._url + "/api/renders/clear";

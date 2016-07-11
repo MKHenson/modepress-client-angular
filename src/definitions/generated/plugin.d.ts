@@ -268,7 +268,7 @@ declare module ModepressClientPlugin {
         /**
          * Removes all renders
          */
-        clear(id: string): ng.IPromise<void>;
+        clear(): ng.IPromise<void>;
         /**
          * Gets all renders
          * @param {IRenderOptions} options
