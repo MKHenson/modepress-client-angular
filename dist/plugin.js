@@ -76,7 +76,7 @@ var ModepressClientPlugin;
         PostService.prototype.delete = function (id) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = that._url + "/api/posts/id";
+                var url = that._url + "/api/posts/" + id;
                 that._http.delete(url).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
@@ -199,7 +199,7 @@ var ModepressClientPlugin;
         CategoryService.prototype.delete = function (id) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = that._url + "/api/categories/id";
+                var url = that._url + "/api/categories/" + id;
                 that._http.delete(url).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));

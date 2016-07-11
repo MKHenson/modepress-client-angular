@@ -120,7 +120,7 @@ module ModepressClientPlugin {
         {
             var that = this;
             return new this._q<string>(function( resolve, reject ) {
-                var url : string = `${that._url}/api/posts/id`;
+                var url : string = `${that._url}/api/posts/${id}`;
                 that._http.delete<Modepress.IResponse>(url).then(function(response){
                     if ( response.data.error )
                         reject(new Error(response.data.message));
