@@ -95,7 +95,7 @@ var ModepressClientPlugin;
         PostService.prototype.edit = function (id, postData) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = that._url + "/api/posts/id";
+                var url = that._url + "/api/posts/" + id;
                 that._http.put(url, postData).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));

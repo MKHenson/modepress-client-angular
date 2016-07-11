@@ -142,7 +142,7 @@ module ModepressClientPlugin {
         {
             var that = this;
             return new this._q<Modepress.IPost>(function( resolve, reject ) {
-                var url : string = `${that._url}/api/posts/id`;
+                var url : string = `${that._url}/api/posts/${id}`;
                 that._http.put<Modepress.IResponse>(url, postData).then(function(response){
                     if ( response.data.error )
                         reject(new Error(response.data.message));
