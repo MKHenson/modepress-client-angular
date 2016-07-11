@@ -1,6 +1,6 @@
 {
   "name": "modepress-client-angular",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A small Angular plugin for communicating with a Modepress backend",
   "main": "gulpfile.js",
   "author": "Mathew Henson",
