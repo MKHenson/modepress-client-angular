@@ -426,9 +426,111 @@ var ModepressClientPlugin;
 })(ModepressClientPlugin || (ModepressClientPlugin = {}));
 var ModepressClientPlugin;
 (function (ModepressClientPlugin) {
+    /**
+     * A service for interacting with page renders and the relevant modepress endpoints
+     */
+    var RenderService = (function () {
+        function RenderService($http, apiUrl, $q) {
+            this._http = $http;
+            this._q = $q;
+            this._url = apiUrl;
+        }
+        /**
+         * Gets a render by its id
+         * @param {string} id The id of the render to fetch
+         * @returns {ng.IPromise<string>} Returns the preview in HTML
+         */
+        RenderService.prototype.preview = function (id) {
+            var that = this;
+            return new this._q(function (resolve, reject) {
+                var url = that._url + "/api/renders/preview/" + id;
+                that._http.get(url).then(function (response) {
+                    resolve(response.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+        /**
+         * Removes a render by its ID
+         * @param {string} id The id of the render
+         * @returns {ng.IPromise<string>} Returns the ID of the removed render
+         */
+        RenderService.prototype.delete = function (id) {
+            var that = this;
+            return new this._q(function (resolve, reject) {
+                var url = that._url + "/api/renders/" + id;
+                that._http.delete(url).then(function (response) {
+                    if (response.data.error)
+                        reject(new Error(response.data.message));
+                    resolve(id);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+        /**
+         * Removes all renders
+         */
+        RenderService.prototype.clear = function (id) {
+            var that = this;
+            return new this._q(function (resolve, reject) {
+                var url = that._url + "/api/renders/clear";
+                that._http.delete(url).then(function (response) {
+                    if (response.data.error)
+                        reject(new Error(response.data.message));
+                    resolve();
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+        /**
+         * Gets all renders
+         * @param {IRenderOptions} options
+         * @returns {ng.IPromise<Modepress.IGetRenders>}
+         */
+        RenderService.prototype.all = function (options) {
+            var that = this;
+            return new this._q(function (resolve, reject) {
+                options = options || {};
+                options.limit = options.limit || undefined;
+                options.index = options.index || undefined;
+                options.keyword = options.keyword || undefined;
+                options.sortOrder = options.sortOrder || undefined;
+                options.minimal = options.minimal || undefined;
+                var url = that._url + "/api/renders?";
+                if (options.keyword !== undefined)
+                    url += "search=" + options.keyword + "&";
+                if (options.sortOrder !== undefined)
+                    url += "sortOrder=" + ModepressClientPlugin.SortOrder[options.sortOrder] + "&";
+                if (options.minimal !== undefined)
+                    url += "minimal=" + options.minimal + "&";
+                if (options.index !== undefined)
+                    url += "index=" + options.index + "&";
+                if (options.limit !== undefined)
+                    url += "limit=" + options.limit + "&";
+                that._http.get(url).then(function (response) {
+                    if (response.data.error)
+                        reject(new Error(response.data.message));
+                    resolve(response.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        };
+        // The dependency injector
+        RenderService.$inject = ["$http", "apiUrl", "$q"];
+        return RenderService;
+    }());
+    ModepressClientPlugin.RenderService = RenderService;
+})(ModepressClientPlugin || (ModepressClientPlugin = {}));
+var ModepressClientPlugin;
+(function (ModepressClientPlugin) {
     angular.module("modepress-client", ['ngSanitize'])
         .value('apiUrl', '')
         .service("posts", ModepressClientPlugin.PostService)
+        .service("renders", ModepressClientPlugin.RenderService)
         .service("categories", ModepressClientPlugin.CategoryService)
         .service("comments", ModepressClientPlugin.CommentService);
 })(ModepressClientPlugin || (ModepressClientPlugin = {}));
