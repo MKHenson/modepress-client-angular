@@ -42,18 +42,18 @@ module ModepressClientPlugin {
         /**
          * Creates a new category
          * @param {Modepress.ICategory} category The category data to create
-         * @returns {ng.IPromise<string>}
+         * @returns {ng.IPromise<Modepress.ICategory>}
          */
-        create(category: Modepress.ICategory): ng.IPromise<string>
+        create(category: Modepress.ICategory): ng.IPromise<Modepress.ICategory>
         {
             var that = this;
-            return new this._q<string>(function( resolve, reject ) {
+            return new this._q<Modepress.ICategory>(function( resolve, reject ) {
                 var url : string = `${that._url}/api/categories`;
-                that._http.post<Modepress.IResponse>(url, category).then(function(response) {
+                that._http.post<Modepress.IGetCategory>(url, category).then(function(response) {
                     if ( response.data.error )
                         reject(new Error(response.data.message));
 
-                    resolve(response.data.message);
+                    resolve(response.data.data);
                 }).catch(function(err) {
                     reject(err);
                 })

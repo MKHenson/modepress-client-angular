@@ -91,9 +91,9 @@ declare module ModepressClientPlugin {
         /**
          * Creates a new post
          * @param {Modepress.IPost} postData The post data to create
-         * @returns {ng.IPromise<string>}
+         * @returns {ng.IPromise<Modepress.IPost>}
          */
-        create(postData: Modepress.IPost): ng.IPromise<string>;
+        create(postData: Modepress.IPost): ng.IPromise<Modepress.IPost>;
         /**
          * Gets all posts that match each of the parameter conditions
          * @param {Modepress.IPostOptions} options The filter options
@@ -120,9 +120,9 @@ declare module ModepressClientPlugin {
         /**
          * Creates a new category
          * @param {Modepress.ICategory} category The category data to create
-         * @returns {ng.IPromise<string>}
+         * @returns {ng.IPromise<Modepress.ICategory>}
          */
-        create(category: Modepress.ICategory): ng.IPromise<string>;
+        create(category: Modepress.ICategory): ng.IPromise<Modepress.ICategory>;
         /**
          * Gets all categories
          * @param {number} index The start index to fetch categories from

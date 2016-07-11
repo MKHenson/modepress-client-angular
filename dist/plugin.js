@@ -108,7 +108,7 @@ var ModepressClientPlugin;
         /**
          * Creates a new post
          * @param {Modepress.IPost} postData The post data to create
-         * @returns {ng.IPromise<string>}
+         * @returns {ng.IPromise<Modepress.IPost>}
          */
         PostService.prototype.create = function (postData) {
             var that = this;
@@ -117,7 +117,7 @@ var ModepressClientPlugin;
                 that._http.post(url, postData).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
-                    resolve(response.data.message);
+                    resolve(response.data.data);
                 }).catch(function (err) {
                     reject(err);
                 });
@@ -212,7 +212,7 @@ var ModepressClientPlugin;
         /**
          * Creates a new category
          * @param {Modepress.ICategory} category The category data to create
-         * @returns {ng.IPromise<string>}
+         * @returns {ng.IPromise<Modepress.ICategory>}
          */
         CategoryService.prototype.create = function (category) {
             var that = this;
@@ -221,7 +221,7 @@ var ModepressClientPlugin;
                 that._http.post(url, category).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
-                    resolve(response.data.message);
+                    resolve(response.data.data);
                 }).catch(function (err) {
                     reject(err);
                 });

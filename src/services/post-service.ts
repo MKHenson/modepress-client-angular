@@ -157,18 +157,18 @@ module ModepressClientPlugin {
         /**
          * Creates a new post
          * @param {Modepress.IPost} postData The post data to create
-         * @returns {ng.IPromise<string>}
+         * @returns {ng.IPromise<Modepress.IPost>}
          */
-        create(postData: Modepress.IPost): ng.IPromise<string>
+        create(postData: Modepress.IPost): ng.IPromise<Modepress.IPost>
         {
             var that = this;
-            return new this._q<string>(function( resolve, reject ) {
+            return new this._q<Modepress.IPost>(function( resolve, reject ) {
                 var url : string = `${that._url}/api/posts`;
-                that._http.post<Modepress.IResponse>(url, postData).then(function(response){
+                that._http.post<Modepress.IGetPost>(url, postData).then(function(response){
                     if ( response.data.error )
                         reject(new Error(response.data.message));
 
-                    resolve(response.data.message);
+                    resolve(response.data.data);
                 }).catch(function(err) {
                     reject(err);
                 })
