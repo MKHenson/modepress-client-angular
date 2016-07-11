@@ -92,21 +92,23 @@ module ModepressClientPlugin {
         /**
          * Gets a post by its unique slug
          * @param {string} slug The slug of the post
+         * @param {boolean} verbose [Optional] If true, returns all post data - incluing any sensitive fields - based on user privileges
          * @returns {ng.IPromise<Modepress.IPost>}
          */
-        bySlug(slug : string) : ng.IPromise<Modepress.IPost>
+        bySlug(slug : string, verbose : boolean = true ) : ng.IPromise<Modepress.IPost>
         {
-            return this.getSingle(`${this._url}/api/posts/slug/${slug}`);
+            return this.getSingle(`${this._url}/api/posts/slug/${slug}?verbose=${verbose.toString()}`);
         }
 
         /**
          * Gets a post by its id
          * @param {string} slug The slug of the post
+         * @param {boolean} verbose [Optional] If true, returns all post data - incluing any sensitive fields - based on user privileges
          * @returns {ng.IPromise<Modepress.IPost>}
          */
-        byId(id : string) : ng.IPromise<Modepress.IPost>
+        byId(id : string, verbose : boolean = true ) : ng.IPromise<Modepress.IPost>
         {
-            return this.getSingle(`${this._url}/api/posts/${id}`);
+            return this.getSingle(`${this._url}/api/posts/${id}?verbose=${verbose.toString()}`);
         }
 
         /**

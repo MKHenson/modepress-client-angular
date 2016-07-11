@@ -64,15 +64,17 @@ declare module ModepressClientPlugin {
         /**
          * Gets a post by its unique slug
          * @param {string} slug The slug of the post
+         * @param {boolean} verbose [Optional] If true, returns all post data - incluing any sensitive fields - based on user privileges
          * @returns {ng.IPromise<Modepress.IPost>}
          */
-        bySlug(slug: string): ng.IPromise<Modepress.IPost>;
+        bySlug(slug: string, verbose?: boolean): ng.IPromise<Modepress.IPost>;
         /**
          * Gets a post by its id
          * @param {string} slug The slug of the post
+         * @param {boolean} verbose [Optional] If true, returns all post data - incluing any sensitive fields - based on user privileges
          * @returns {ng.IPromise<Modepress.IPost>}
          */
-        byId(id: string): ng.IPromise<Modepress.IPost>;
+        byId(id: string, verbose?: boolean): ng.IPromise<Modepress.IPost>;
         /**
          * Removes a post by its ID
          * @param {string} id The id of the post

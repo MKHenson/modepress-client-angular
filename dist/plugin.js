@@ -51,18 +51,22 @@ var ModepressClientPlugin;
         /**
          * Gets a post by its unique slug
          * @param {string} slug The slug of the post
+         * @param {boolean} verbose [Optional] If true, returns all post data - incluing any sensitive fields - based on user privileges
          * @returns {ng.IPromise<Modepress.IPost>}
          */
-        PostService.prototype.bySlug = function (slug) {
-            return this.getSingle(this._url + "/api/posts/slug/" + slug);
+        PostService.prototype.bySlug = function (slug, verbose) {
+            if (verbose === void 0) { verbose = true; }
+            return this.getSingle(this._url + "/api/posts/slug/" + slug + "?verbose=" + verbose.toString());
         };
         /**
          * Gets a post by its id
          * @param {string} slug The slug of the post
+         * @param {boolean} verbose [Optional] If true, returns all post data - incluing any sensitive fields - based on user privileges
          * @returns {ng.IPromise<Modepress.IPost>}
          */
-        PostService.prototype.byId = function (id) {
-            return this.getSingle(this._url + "/api/posts/" + id);
+        PostService.prototype.byId = function (id, verbose) {
+            if (verbose === void 0) { verbose = true; }
+            return this.getSingle(this._url + "/api/posts/" + id + "?verbose=" + verbose.toString());
         };
         /**
          * Removes a post by its ID
