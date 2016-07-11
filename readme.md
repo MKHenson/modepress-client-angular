@@ -5,4 +5,4 @@ service for calling common Modepress API functions. Also comes built with a Type
 with TS based projects.
 
 ## Current stable version
-* Version v0.1.3
+* Version v0.1.4
