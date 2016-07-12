@@ -81,15 +81,14 @@ module ModepressClientPlugin {
 
         /**
          * Removes a comment by its ID
-         * @param {string} user The parent user of the comment
          * @param {string} id The id of the comment
          * @returns {ng.IPromise<string>}
          */
-        delete(user: string, id: string): ng.IPromise<string>
+        delete(id: string): ng.IPromise<string>
         {
             var that = this;
             return new this._q<string>(function( resolve, reject ) {
-                var url : string = `${that._url}/api/users/${user}/comments/${id}`;
+                var url : string = `${that._url}/api/comments/${id}`;
                 that._http.delete<Modepress.IResponse>(url).then(function(response) {
                     if ( response.data.error )
                         reject(new Error(response.data.message));
@@ -103,16 +102,15 @@ module ModepressClientPlugin {
 
         /**
          * Edits a comment by its ID
-         * @param {string} user The parent user of the comment
          * @param {string} id The id of the comment
          * @param {Modepress.IComment} commentData The comment data to edit
          * @returns {ng.IPromise<string>}
          */
-        edit(user: string, id: string, commentData: Modepress.IComment): ng.IPromise<string>
+        edit( id: string, commentData: Modepress.IComment): ng.IPromise<string>
         {
             var that = this;
             return new this._q<Modepress.IComment>(function( resolve, reject ) {
-                var url : string = `${that._url}/api/users/${user}/comments/${id}`;
+                var url : string = `${that._url}/api/comments/${id}`;
                 that._http.put<Modepress.IResponse>(url, commentData).then(function(response){
                     if ( response.data.error )
                         reject(new Error(response.data.message));

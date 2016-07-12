@@ -185,19 +185,17 @@ declare module ModepressClientPlugin {
         byId(id: string): ng.IPromise<Modepress.IComment>;
         /**
          * Removes a comment by its ID
-         * @param {string} user The parent user of the comment
          * @param {string} id The id of the comment
          * @returns {ng.IPromise<string>}
          */
-        delete(user: string, id: string): ng.IPromise<string>;
+        delete(id: string): ng.IPromise<string>;
         /**
          * Edits a comment by its ID
-         * @param {string} user The parent user of the comment
          * @param {string} id The id of the comment
          * @param {Modepress.IComment} commentData The comment data to edit
          * @returns {ng.IPromise<string>}
          */
-        edit(user: string, id: string, commentData: Modepress.IComment): ng.IPromise<string>;
+        edit(id: string, commentData: Modepress.IComment): ng.IPromise<string>;
         /**
          * Creates a new comment
          * @param {string} postId The post we are commenting on

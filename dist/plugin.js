@@ -294,14 +294,13 @@ var ModepressClientPlugin;
         };
         /**
          * Removes a comment by its ID
-         * @param {string} user The parent user of the comment
          * @param {string} id The id of the comment
          * @returns {ng.IPromise<string>}
          */
-        CommentService.prototype.delete = function (user, id) {
+        CommentService.prototype.delete = function (id) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = that._url + "/api/users/" + user + "/comments/" + id;
+                var url = that._url + "/api/comments/" + id;
                 that._http.delete(url).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
@@ -313,15 +312,14 @@ var ModepressClientPlugin;
         };
         /**
          * Edits a comment by its ID
-         * @param {string} user The parent user of the comment
          * @param {string} id The id of the comment
          * @param {Modepress.IComment} commentData The comment data to edit
          * @returns {ng.IPromise<string>}
          */
-        CommentService.prototype.edit = function (user, id, commentData) {
+        CommentService.prototype.edit = function (id, commentData) {
             var that = this;
             return new this._q(function (resolve, reject) {
-                var url = that._url + "/api/users/" + user + "/comments/" + id;
+                var url = that._url + "/api/comments/" + id;
                 that._http.put(url, commentData).then(function (response) {
                     if (response.data.error)
                         reject(new Error(response.data.message));
