@@ -358,23 +358,31 @@ var ModepressClientPlugin;
          * @returns {ng.IPromise<Modepress.IGetComments>}
          */
         CommentService.prototype.allByParent = function (parentId, options) {
-            return this.all(this._url + "/api/nested-comments/" + parentId, options);
+            return this._all(this._url + "/api/nested-comments/" + parentId + "?", options);
         };
         /**
-        * Gets all comments of a user
+        * Gets all comments of a particular user
         * @param {string} user The username  of the user
         * @param {Modepress.ICommentOptions} options The filter options
         * @returns {ng.IPromise<Modepress.IGetComments>}
         */
         CommentService.prototype.allByUser = function (user, options) {
-            return this.all(this._url + "/api/users/" + user + "/comments", options);
+            return this._all(this._url + "/api/users/" + user + "/comments?", options);
+        };
+        /**
+         * Gets all comments. Requires admin priviledges.
+         * @param {Modepress.ICommentOptions} options The filter options
+         * @returns {ng.IPromise<Modepress.IGetComments>}
+         */
+        CommentService.prototype.all = function (options) {
+            return this._all(this._url + "/api/comments?", options);
         };
         /**
          * Gets all comments that match each of the parameter conditions
          * @param {Modepress.ICommentOptions} options The filter options
          * @returns {ng.IPromise<Modepress.IGetComments>}
          */
-        CommentService.prototype.all = function (url, options) {
+        CommentService.prototype._all = function (url, options) {
             if (url === void 0) { url = this._url + "/api/comments?"; }
             var that = this;
             return new this._q(function (resolve, reject) {

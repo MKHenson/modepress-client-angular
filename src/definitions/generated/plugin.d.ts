@@ -214,18 +214,24 @@ declare module ModepressClientPlugin {
          */
         allByParent(parentId: string, options?: ICommentOptions): ng.IPromise<Modepress.IGetComments>;
         /**
-        * Gets all comments of a user
+        * Gets all comments of a particular user
         * @param {string} user The username  of the user
         * @param {Modepress.ICommentOptions} options The filter options
         * @returns {ng.IPromise<Modepress.IGetComments>}
         */
         allByUser(user: string, options?: ICommentOptions): ng.IPromise<Modepress.IGetComments>;
         /**
+         * Gets all comments. Requires admin priviledges.
+         * @param {Modepress.ICommentOptions} options The filter options
+         * @returns {ng.IPromise<Modepress.IGetComments>}
+         */
+        all(options?: ICommentOptions): ng.IPromise<Modepress.IGetComments>;
+        /**
          * Gets all comments that match each of the parameter conditions
          * @param {Modepress.ICommentOptions} options The filter options
          * @returns {ng.IPromise<Modepress.IGetComments>}
          */
-        all(url?: string, options?: ICommentOptions): ng.IPromise<Modepress.IGetComments>;
+        private _all(url?, options?);
     }
 }
 declare module ModepressClientPlugin {
