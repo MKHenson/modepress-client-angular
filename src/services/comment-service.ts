@@ -155,18 +155,28 @@ module ModepressClientPlugin {
          */
         allByParent( parentId: string, options? : ICommentOptions ) : ng.IPromise<Modepress.IGetComments>
         {
-            return this.all(`${this._url}/api/nested-comments/${parentId}`, options);
+            return this._all(`${this._url}/api/nested-comments/${parentId}?`, options);
         }
 
          /**
-         * Gets all comments of a user
+         * Gets all comments of a particular user
          * @param {string} user The username  of the user
          * @param {Modepress.ICommentOptions} options The filter options
          * @returns {ng.IPromise<Modepress.IGetComments>}
          */
         allByUser( user: string, options? : ICommentOptions ) : ng.IPromise<Modepress.IGetComments>
         {
-            return this.all(`${this._url}/api/users/${user}/comments`, options);
+            return this._all(`${this._url}/api/users/${user}/comments?`, options);
+        }
+
+        /**
+         * Gets all comments. Requires admin priviledges.
+         * @param {Modepress.ICommentOptions} options The filter options
+         * @returns {ng.IPromise<Modepress.IGetComments>}
+         */
+        all( options? : ICommentOptions ) : ng.IPromise<Modepress.IGetComments>
+        {
+            return this._all(`${this._url}/api/comments?`, options);
         }
 
         /**
@@ -174,7 +184,7 @@ module ModepressClientPlugin {
          * @param {Modepress.ICommentOptions} options The filter options
          * @returns {ng.IPromise<Modepress.IGetComments>}
          */
-        all( url: string = `${this._url}/api/comments?`, options? : ICommentOptions ) : ng.IPromise<Modepress.IGetComments>
+        private _all( url: string = `${this._url}/api/comments?`, options? : ICommentOptions ) : ng.IPromise<Modepress.IGetComments>
         {
             var that = this;
             return new this._q<Modepress.IGetComments>(function( resolve, reject ) {
